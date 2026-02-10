@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Le Majestic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8960C;
+            --deep-navy: #0A1128;
+            --charcoal: #1C1C1E;
+            --cream: #F5F1E8;
+            --white: #FFFFFF;
+            --accent-burgundy: #8B0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--cream);
+            background: var(--deep-navy);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 17, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 17, 40, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--charcoal) 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .page-hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-hero-content h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .page-hero-content p {
+            font-size: 1.3rem;
+            color: rgba(245, 241, 232, 0.8);
+            letter-spacing: 2px;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 8rem 3rem;
+            background: var(--charcoal);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .story-content {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease;
+        }
+
+        .story-content.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-content h2 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+        }
+
+        .story-content h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-content p {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+        }
+
+        .story-image {
+            position: relative;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s ease;
+        }
+
+        .story-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(139, 0, 0, 0.3));
+            z-index: 1;
+        }
+
+        .story-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--accent-burgundy) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 6rem 3rem;
+            background: var(--deep-navy);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--cream);
+            letter-spacing: 1px;
+        }
+
+        /* Chefs Section */
+        .chefs-section {
+            padding: 8rem 3rem;
+            background: var(--charcoal);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(245, 241, 232, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .chefs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .chef-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .chef-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .chef-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .chef-image {
+            height: 350px;
+            background: linear-gradient(135deg, var(--gold), var(--accent-burgundy));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chef-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .chef-card:hover .chef-image::after {
+            left: 100%;
+        }
+
+        .chef-content {
+            padding: 2.5rem;
+        }
+
+        .chef-content h3 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .chef-title {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.7);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .chef-content p {
+            color: var(--cream);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Awards Section */
+        .awards-section {
+            padding: 8rem 3rem;
+            background: var(--deep-navy);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 5rem;
+        }
+
+        .award-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            gap: 2rem;
+            align-items: start;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .award-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .award-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .award-icon {
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+
+        .award-content h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .award-year {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .award-content p {
+            color: var(--cream);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 17, 40, 0.98);
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--cream);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            color: var(--deep-navy);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: rgba(245, 241, 232, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(10, 17, 40, 0.98);
+                width: 300px;
+                padding: 3rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chefs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <a href="index.html" class="logo">Le Majestic</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle">☰</button>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Our Story</h1>
+            <p>A LEGACY OF CULINARY EXCELLENCE</p>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h2>Since 1895</h2>
+                    <p>Le Majestic opened its doors in 1895, founded by renowned French chef Auguste Beaumont. What began as a humble establishment has blossomed into one of the world's most celebrated fine dining destinations.</p>
+                    
+                    <h3>Our Philosophy</h3>
+                    <p>We believe that dining is an art form. Every dish that leaves our kitchen is a carefully crafted masterpiece, combining the finest ingredients with innovative techniques and timeless traditions.</p>
+                    
+                    <h3>Commitment to Excellence</h3>
+                    <p>Our dedication to perfection has earned us 3 Michelin stars for five consecutive years. We source ingredients from local artisans and international suppliers who share our passion for quality.</p>
+                </div>
+                <div class="story-image">
+                    <div class="story-placeholder">
+                        🏛️
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">129</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Michelin Stars</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">International Awards</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Vintage Wines</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="chefs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Chefs</h2>
+                <p class="section-subtitle">MASTERS OF CULINARY ART</p>
+            </div>
+            <div class="chefs-grid">
+                <div class="chef-card">
+                    <div class="chef-image">👨‍🍳</div>
+                    <div class="chef-content">
+                        <h3>Chef Laurent Dubois</h3>
+                        <p class="chef-title">EXECUTIVE CHEF</p>
+                        <p>With 25 years of experience and training under legendary chefs in Paris, Chef Laurent brings unparalleled expertise and innovation to every dish.</p>
+                    </div>
+                </div>
+                <div class="chef-card">
+                    <div class="chef-image">👨‍🍳</div>
+                    <div class="chef-content">
+                        <h3>Chef Maria Rossi</h3>
+                        <p class="chef-title">HEAD PASTRY CHEF</p>
+                        <p>A master of desserts, Chef Maria's creations are works of art that perfectly balance flavor, texture, and visual appeal.</p>
+                    </div>
+                </div>
+                <div class="chef-card">
+                    <div class="chef-image">👨‍🍳</div>
+                    <div class="chef-content">
+                        <h3>Chef Hiroshi Tanaka</h3>
+                        <p class="chef-title">EXECUTIVE SOUS CHEF</p>
+                        <p>Trained in Tokyo's finest establishments, Chef Hiroshi brings precision and elegance to our seafood and Japanese-inspired dishes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="awards-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Awards & Recognition</h2>
+                <p class="section-subtitle">CELEBRATED WORLDWIDE</p>
+            </div>
+            <div class="awards-grid">
+                <div class="award-card">
+                    <div class="award-icon">⭐</div>
+                    <div class="award-content">
+                        <h3>3 Michelin Stars</h3>
+                        <p class="award-year">2021 - 2026</p>
+                        <p>Consistently awarded the highest honor in fine dining for exceptional cuisine, service, and atmosphere.</p>
+                    </div>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon">🏆</div>
+                    <div class="award-content">
+                        <h3>World's Best Restaurant</h3>
+                        <p class="award-year">2024, 2025</p>
+                        <p>Ranked #1 in Asia and #3 globally by The World's 50 Best Restaurants.</p>
+                    </div>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon">🍷</div>
+                    <div class="award-content">
+                        <h3>Wine Spectator Grand Award</h3>
+                        <p class="award-year">2020 - 2026</p>
+                        <p>Honored for our exceptional wine list featuring over 1,000 selections from renowned vineyards worldwide.</p>
+                    </div>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon">💎</div>
+                    <div class="award-content">
+                        <h3>Forbes Five-Star Rating</h3>
+                        <p class="award-year">2019 - 2026</p>
+                        <p>Recognized for providing an extraordinary experience with impeccable service and attention to detail.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Le Majestic</h4>
+                <p>Experience luxury dining where every meal is a masterpiece.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About Us</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <p>Monday - Friday<br>6:00 PM - 11:00 PM</p>
+                <p>Saturday - Sunday<br>5:00 PM - 12:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>123 Royal Boulevard<br>Ghaziabad, UP 201001</p>
+                <p>Phone: +91 9876543210<br>Email: info@lemajestic.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Le Majestic. All Rights Reserved. Crafted with Excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.story-content, .story-image, .stat-card, .chef-card, .award-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Staggered animations
+        document.querySelectorAll('.stat-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.chef-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.15}s`;
+        });
+
+        document.querySelectorAll('.award-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.15}s`;
+        });
+    </script>
+</body>
+</html>
