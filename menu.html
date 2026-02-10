@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Le Majestic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8960C;
+            --deep-navy: #0A1128;
+            --charcoal: #1C1C1E;
+            --cream: #F5F1E8;
+            --white: #FFFFFF;
+            --accent-burgundy: #8B0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--cream);
+            background: var(--deep-navy);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 17, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 17, 40, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .page-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--charcoal) 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .page-hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-hero-content h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, var(--gold), #E8D4A0, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .page-hero-content p {
+            font-size: 1.3rem;
+            color: rgba(245, 241, 232, 0.8);
+            letter-spacing: 2px;
+        }
+
+        .menu-section {
+            padding: 8rem 3rem;
+            background: var(--charcoal);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--cream);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold);
+            color: var(--deep-navy);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .menu-item-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--gold), var(--accent-burgundy));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .menu-item:hover .menu-item-image::after {
+            left: 100%;
+        }
+
+        .menu-item-content {
+            padding: 2rem;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-content h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-price {
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .menu-item-content p {
+            color: rgba(245, 241, 232, 0.8);
+            line-height: 1.8;
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background: rgba(10, 17, 40, 0.98);
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--cream);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            color: var(--deep-navy);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            color: rgba(245, 241, 232, 0.6);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(10, 17, 40, 0.98);
+                width: 300px;
+                padding: 3rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <a href="index.html" class="logo">Le Majestic</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="reservation.html">Reservation</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle">☰</button>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Our Menu</h1>
+            <p>EXQUISITE CULINARY CREATIONS</p>
+        </div>
+    </section>
+
+    <section class="menu-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="appetizers">Appetizers</button>
+                <button class="filter-btn" data-category="mains">Mains</button>
+                <button class="filter-btn" data-category="desserts">Desserts</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Appetizers -->
+                <div class="menu-item" data-category="appetizers">
+                    <div class="menu-item-image">🦐</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Prawn Cocktail Royale</h3>
+                            <span class="menu-price">₹2,100</span>
+                        </div>
+                        <p>Jumbo prawns with Marie Rose sauce, avocado, and microgreens.</p>
+                        <span class="category-tag">Appetizers</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="appetizers">
+                    <div class="menu-item-image">🥗</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Truffle Caesar Salad</h3>
+                            <span class="menu-price">₹1,800</span>
+                        </div>
+                        <p>Crisp romaine, parmesan crisps, and black truffle dressing.</p>
+                        <span class="category-tag">Appetizers</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="appetizers">
+                    <div class="menu-item-image">🍄</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Wild Mushroom Tart</h3>
+                            <span class="menu-price">₹2,200</span>
+                        </div>
+                        <p>Porcini, morel, and chanterelle in herb-infused pastry.</p>
+                        <span class="category-tag">Appetizers</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="appetizers">
+                    <div class="menu-item-image">🦪</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Fresh Oysters</h3>
+                            <span class="menu-price">₹3,200</span>
+                        </div>
+                        <p>Half dozen fresh oysters with mignonette and lemon.</p>
+                        <span class="category-tag">Appetizers</span>
+                    </div>
+                </div>
+
+                <!-- Mains -->
+                <div class="menu-item" data-category="mains">
+                    <div class="menu-item-image">🦞</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Lobster Thermidor</h3>
+                            <span class="menu-price">₹4,500</span>
+                        </div>
+                        <p>Fresh Maine lobster with creamy cognac sauce, served in shell.</p>
+                        <span class="category-tag">Mains</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="mains">
+                    <div class="menu-item-image">🥩</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Wagyu Beef Wellington</h3>
+                            <span class="menu-price">₹6,200</span>
+                        </div>
+                        <p>Premium A5 Wagyu in puff pastry with truffle duxelles.</p>
+                        <span class="category-tag">Mains</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="mains">
+                    <div class="menu-item-image">🦆</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Roasted Duck Breast</h3>
+                            <span class="menu-price">₹3,800</span>
+                        </div>
+                        <p>Pan-seared duck with orange glaze and seasonal vegetables.</p>
+                        <span class="category-tag">Mains</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="mains">
+                    <div class="menu-item-image">🐟</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Chilean Sea Bass</h3>
+                            <span class="menu-price">₹4,200</span>
+                        </div>
+                        <p>Butter-poached sea bass with lemon beurre blanc.</p>
+                        <span class="category-tag">Mains</span>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">🍰</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Chocolate Symphony</h3>
+                            <span class="menu-price">₹1,800</span>
+                        </div>
+                        <p>Seven layers of Belgian chocolate with gold leaf and berries.</p>
+                        <span class="category-tag">Desserts</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">🍮</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Crème Brûlée</h3>
+                            <span class="menu-price">₹1,400</span>
+                        </div>
+                        <p>Classic vanilla custard with caramelized sugar crust.</p>
+                        <span class="category-tag">Desserts</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">🥧</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Tarte Tatin</h3>
+                            <span class="menu-price">₹1,600</span>
+                        </div>
+                        <p>Caramelized apple tart with vanilla ice cream.</p>
+                        <span class="category-tag">Desserts</span>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-category="desserts">
+                    <div class="menu-item-image">🍨</div>
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <h3>Grand Marnier Soufflé</h3>
+                            <span class="menu-price">₹2,000</span>
+                        </div>
+                        <p>Light and airy orange soufflé with crème anglaise.</p>
+                        <span class="category-tag">Desserts</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Le Majestic</h4>
+                <p>Experience luxury dining where every meal is a masterpiece.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About Us</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <p>Monday - Friday<br>6:00 PM - 11:00 PM</p>
+                <p>Saturday - Sunday<br>5:00 PM - 12:00 AM</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>123 Royal Boulevard<br>Ghaziabad, UP 201001</p>
+                <p>Phone: +91 9876543210<br>Email: info@lemajestic.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Le Majestic. All Rights Reserved. Crafted with Excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Menu filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.getAttribute('data-category');
+                
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                menuItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
